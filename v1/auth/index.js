@@ -1,4 +1,4 @@
-const User = require('../lib/db')
+const User = require('../../lib/db')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
