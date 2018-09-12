@@ -1,17 +1,41 @@
+/**
+ * Dependencies
+ */
+
+const authorize = require('../../lib/authorize')
+
 module.exports = {
-    post: {
-        '/': {
-            title: 'test',
-            data: {
-                email: {
-                    type: 'string',
-                    required: true
-                },
-                password: {
-                    type: 'string',
-                    required: true
-                }
-            }
-        }
+  get: {
+    '/': {
+      middleware: [authorize]
     }
+  },
+  post: {
+    '/register': {
+      title: 'test',
+      data: {
+        email: {
+          type: 'string',
+          required: true
+        },
+        password: {
+          type: 'string',
+          required: true
+        }
+      }
+    },
+    '/login': {
+      title: 'Login to tracker',
+      data: {
+        email: {
+          type: 'string',
+          required: true
+        },
+        password: {
+          type: 'string',
+          required: true
+        }
+      }
+    }
+  }
 }
