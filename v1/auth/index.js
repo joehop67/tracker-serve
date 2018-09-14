@@ -14,7 +14,7 @@ module.exports = {
      * 
      * @param {Object} data
      */
-    '/': data => {
+    '/register': data => {
       if (data.email && data.password) {
         const hashed = bcrypt.hashSync(data.password, 10)
         return User.create({ email: data.email, password: hashed }).then(user => tokenize({id: user._id}))
@@ -33,7 +33,7 @@ module.exports = {
         return User.findOne({email: data.email}).then(user => {
           if (!user) return error(404, 'No User Found', res)
           if (bcrypt.compareSync(data.password, user.password)) {
-            return tokenize({id: user._id})
+            return tokenize({id: user._id, current_user: user.email})
           } else {
             return error(403, 'Incorrect Password', res)
           }
