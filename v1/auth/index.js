@@ -17,7 +17,7 @@ module.exports = {
     '/register': data => {
       if (data.email && data.password) {
         const hashed = bcrypt.hashSync(data.password, 10)
-        return User.create({ email: data.email, password: hashed }).then(user => tokenize({id: user._id}))
+        return User.create({ email: data.email, password: hashed }).then(user => tokenize({id: user._id, current_user: user.email}))
       }
       return 'No email entered'
     },

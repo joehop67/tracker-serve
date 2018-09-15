@@ -11,14 +11,31 @@ module.exports = {
           type: 'string',
           required: 'true'
         },
-        userEmail: {
-          type: 'string',
-          required: true
-        },
         message: {
           type: 'string'
         }
       }
+    },
+    '/accept': {
+      title: 'Accept request for a partner',
+      middleware: [authorize],
+      data: {
+        request: {
+          type: 'string',
+          required: true
+        },
+        accept: {
+          type: 'string',
+          required: true
+        }
+      }
+    }
+  },
+  get: {
+    '/': {
+      title: 'Get all partner requests',
+      middleware: [authorize],
+      data: {}
     }
   }
 }
