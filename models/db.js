@@ -16,18 +16,6 @@ const userSchema = new Schema({
   partnerRequest: Schema.ObjectId
 })
 
-const partnerRequestSchema = new Schema({
-  recipientEmail: String,
-  requesterEmail: String,
-  recipientId: Schema.ObjectId,
-  requesterId: Schema.ObjectId
-})
-
-const groupSchema = new Schema({
-  members: Array,
-  leader: Schema.ObjectId
-})
-
 //Create User Model
 const User = connection.model('User', userSchema)
 

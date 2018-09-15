@@ -1,4 +1,7 @@
-const User = require('../../lib/db')
+/**
+ * Dependencies
+ */
+const User = require('../../models/db')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const error = require('../../lib/reterror')

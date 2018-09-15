@@ -7,6 +7,7 @@ const mongoose = require('mongoose')
 const connection = mongoose.createConnection(process.env.MONGO_URL)
 const Schema = mongoose.Schema
 
+// Define partner request schema
 const partnerRequestSchema = new Schema({
   recipientEmail: String,
   requesterEmail: String,
@@ -14,6 +15,8 @@ const partnerRequestSchema = new Schema({
   requesterId: Schema.ObjectId
 })
 
+// Define partner request model
 const Request = connection.model('Request', partnerRequestSchema)
 
+// Export model
 module.exports = Request

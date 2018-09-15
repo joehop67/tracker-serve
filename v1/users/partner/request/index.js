@@ -1,8 +1,8 @@
 /**
  * Dependencies
  */
-const User = require('../../../../lib/db')
-const Request = require('../../../../lib/request')
+const User = require('../../../../models/db')
+const Request = require('../../../../models/request')
 const error = require('../../../../lib/reterror')
 
 module.exports = {
