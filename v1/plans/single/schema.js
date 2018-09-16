@@ -44,8 +44,37 @@ module.exports = {
         cost: {
           type: 'number',
           required: true
+        },
+        budget: {
+          type: 'string'
         }
       }
+    }
+  },
+  put: {
+    '/update/budget/:id': {
+      title: 'Update existing budget',
+      middleware: [authorize],
+      data: {
+        name: {
+          type: 'string'
+        },
+        expense: {
+          type: 'string'
+        }
+      }
+    }
+  },
+  get: {
+    '/budgets': {
+      title: 'Get all users budgets',
+      middleware: [authorize],
+      data: {}
+    },
+    '/expenses': {
+      title: 'Get all user expenses',
+      middleware: [authorize],
+      data: {}
     }
   }
 }
