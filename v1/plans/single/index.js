@@ -20,28 +20,29 @@ module.exports = {
     '/new/budget': (data, options, res) => {
       return userWithPartner(data.id).then(user => {
         const saveLimit = data.salary - data.savings
-        if (typeof user.partner === 'object') {
-          return Budget.create({
-            name: data.name ? data.name : 'Budget-' + Math.floor(Math.random() * 3000000).toString(),
-            user: user.user._id,
-            partner: user.partner._id,
-            month: new Date().getMonth(),
-            salary: data.salary,
-            savings: data.savings,
-            saveLimit: saveLimit,
-            overLimit: false
-          }).then(budget => budget)
-        } else {
-          return Budget.create({
-            name: data.name ? data.name : 'Budget-' + Math.floor(Math.random() * 3000000).toString(),
-            user: user.user._id,
-            month: new Date().getMonth(),
-            salary: data.salary,
-            savings: data.savings,
-            saveLimit: saveLimit,
-            overLimit: false
-          }).then(budget => budget)
-        }
+        return Budget.create({
+          name: data.name ? data.name : 'Budget-' + Math.floor(Math.random() * 3000000).toString(),
+          user: user.user._id,
+          partner: typeof user.partner === 'object' ? user.partner._id : null,
+          month: new Date().getMonth(),
+          salary: data.salary,
+          savings: data.savings,
+          saveLimit: saveLimit,
+          overLimit: false,
+        }).then(budget => {
+          const promises =  data.expenses.map(async expense => {
+            return Expense.findById(expense).then(ex => {
+              if (ex._id.toString() === data.id) {
+                budget.expenses.push(ex._id)
+                budget.save()
+              } else return {message: 'Could not add expense'}
+            })
+          })
+          return Promise.all(promises).then(resolved => {
+            if (resolved[0].message) return {...budget._doc, message: 'Could not add expense'}
+            return budget
+          })
+        })
       })
     },
     /**
