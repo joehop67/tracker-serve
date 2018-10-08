@@ -17,10 +17,16 @@ module.exports = {
      * 
      * @param {Object} data
      */
-    '/register': data => {
+    '/register': (data, req, res) => {
       if (data.email && data.password) {
         const hashed = bcrypt.hashSync(data.password, 10)
-        return User.create({ email: data.email, password: hashed }).then(user => tokenize({id: user._id, current_user: user.email}))
+        return User.findOne({email: data.email}).then(user => {
+          if (!user) {
+            return User.create({ email: data.email, password: hashed }).then(user => tokenize({id: user._id, current_user: user.email}))
+          } else {
+            return error(403, 'User already exists', res)
+          }
+        })
       }
       return 'No email entered'
     },
