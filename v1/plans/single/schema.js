@@ -12,10 +12,6 @@ module.exports = {
         name: {
           type: 'string'
         },
-        salary: {
-          type: 'number',
-          required: true
-        },
         savings: {
           type: 'number',
           required: true

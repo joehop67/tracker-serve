@@ -21,6 +21,12 @@ module.exports = {
         password: {
           type: 'string',
           required: true
+        },
+        name: {
+          type: 'string'
+        },
+        salary: {
+          type: 'string'
         }
       }
     },

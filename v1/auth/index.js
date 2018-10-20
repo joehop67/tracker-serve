@@ -22,7 +22,7 @@ module.exports = {
         const hashed = bcrypt.hashSync(data.password, 10)
         return User.findOne({email: data.email}).then(user => {
           if (!user) {
-            return User.create({ email: data.email, password: hashed }).then(user => tokenize({id: user._id, current_user: user.email}))
+            return User.create({ email: data.email, password: hashed, name: data.name, salary: Number(data.salary) || 0 }).then(user => tokenize({id: user._id, current_user: user.email}))
           } else {
             return error(403, 'User already exists', res)
           }
@@ -41,10 +41,20 @@ module.exports = {
       if (data.email && data.password) {
         return User.findOne({email: data.email}).then(user => {
           if (!user) return error(404, 'No User Found', res)
-          if (bcrypt.compareSync(data.password, user.password)) {
-            return tokenize({id: user._id, current_user: user.email})
+          if (user.hasPartner) {
+            return User.findById(user.partner).then(partner => {
+              if (bcrypt.compareSync(data.password, user.password)) {
+                return tokenize({id: user._id, current_user: user.email, partner: partner.email, partner_id: partner._id})
+              } else {
+                return error(403, 'Incorrect Password', res)
+              }
+            })
           } else {
-            return error(403, 'Incorrect Password', res)
+            if (bcrypt.compareSync(data.password, user.password)) {
+              return tokenize({id: user._id, current_user: user.email})
+            } else {
+              return error(403, 'Incorrect Password', res)
+            }
           }
         })
       }

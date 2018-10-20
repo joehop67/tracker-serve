@@ -10,10 +10,13 @@ const Schema = mongoose.Schema
 //Define User Schema
 const userSchema = new Schema({
   email: {type: String, unique: true},
+  name: String,
   password: String,
   partner: Schema.ObjectId,
   hasPartner: Boolean,
-  partnerRequest: Schema.ObjectId
+  partnerRequest: Schema.ObjectId,
+  currentBudget: Schema.ObjectId,
+  salary: Number
 })
 
 //Create User Model
