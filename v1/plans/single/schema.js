@@ -55,6 +55,9 @@ module.exports = {
         name: {
           type: 'string'
         },
+        saved: {
+          type: 'string'
+        },
         expense: {
           type: 'string'
         }
@@ -69,6 +72,11 @@ module.exports = {
     },
     '/expenses': {
       title: 'Get all user expenses',
+      middleware: [authorize],
+      data: {}
+    },
+    '/budgets/:budget': {
+      title: 'Get budget by ID',
       middleware: [authorize],
       data: {}
     }

@@ -30,6 +30,7 @@ module.exports = {
           partner: typeof user.partner === 'object' ? user.partner._id : null,
           month: new Date().getMonth(),
           savings: data.savings,
+          saved: 0,
           saveLimit: saveLimit,
           overLimit: false,
         }).then(budget => {
@@ -94,7 +95,7 @@ module.exports = {
               return budget
             })
           } else {
-            budget.set({name: data.name})
+            budget.set({name: data.name, saved: Number(data.saved)})
             budget.save()
             return budget
           }
@@ -130,6 +131,14 @@ module.exports = {
       return User.findById(data.id).then(user => {
         return Expense.find({user: user._id}).then(expenses => {
           return expenses
+        })
+      })
+    },
+    '/budgets/:budget': (data, options, res) => {
+      return User.findById(data.id).then(user => {
+        return Budget.findById(data.budget).then(budget => {
+          if (budget.user.toString() !== user._id.toString()) return error(403, 'You are not authorized to access this budget', res)
+          else return budget
         })
       })
     }

@@ -15,6 +15,7 @@ const budgetSchema = new Schema({
   month: Number,
   salary: Number,
   savings: Number,
+  saved: Number,
   saveLimit: Number,
   hardLimit: Number,
   overLimit: Boolean,
