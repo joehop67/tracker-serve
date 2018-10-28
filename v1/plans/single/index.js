@@ -33,6 +33,7 @@ module.exports = {
           saved: 0,
           saveLimit: saveLimit,
           overLimit: false,
+          current: true
         }).then(budget => {
           if (data.expenses) {
             const promises =  data.expenses.map(async expense => {

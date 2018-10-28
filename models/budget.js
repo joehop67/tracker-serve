@@ -19,7 +19,8 @@ const budgetSchema = new Schema({
   saveLimit: Number,
   hardLimit: Number,
   overLimit: Boolean,
-  expenses: [Schema.ObjectId]
+  expenses: [Schema.ObjectId],
+  current: Boolean
 })
 
 // Define Budget Model
