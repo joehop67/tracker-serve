@@ -62,13 +62,16 @@ module.exports = {
   },
   get: {
     /**
-     * Get partner of current user
+     * Get partner requests of current user
      * 
      * @param {Object} data
      */
     '/': data => {
       return User.findById(data.id).then(user => {
-        if (user.partnerRequest) return Request.findById(user.partnerRequest).then(req => req)
+        if (user.partnerRequest) return Request.findById(user.partnerRequest).then(req => {
+          if (req.recipientId.toString() === user._id.toString()) return req
+          else return {message: 'No request'}
+        })
         else return {message: 'No Request'}
       })
     }
