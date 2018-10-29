@@ -10,5 +10,19 @@ module.exports = {
       middleware: [authorize],
       data: {}
     }
+  },
+  post: {
+    '/search': {
+      title: 'Find users',
+      middleware: [authorize],
+      data: {
+        name: {
+          type: 'string'
+        },
+        email: {
+          type: 'string'
+        }
+      }
+    }
   }
 }

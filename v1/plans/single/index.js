@@ -19,6 +19,11 @@ module.exports = {
      */
     '/new/budget': (data, options, res) => {
       return userWithPartner(data.id).then(user => {
+        if (user.user.currentBudget) {
+          Budget.findByIdAndUpdate(user.user.currentBudget, {current: false}).then(res => {
+            console.log(res)
+          })
+        }
         const salary = user.user.salary
         if (!salary) {
           return error(404, 'Must enter salary before you can create a budget', res)
@@ -135,6 +140,14 @@ module.exports = {
         })
       })
     },
+    /**
+     * Get budget by ID
+     * 
+     * @param {Object} data
+     * @param {Object} options
+     * @param {Object} res
+     * @api public
+     */
     '/budgets/:budget': (data, options, res) => {
       return User.findById(data.id).then(user => {
         return Budget.findById(data.budget).then(budget => {
